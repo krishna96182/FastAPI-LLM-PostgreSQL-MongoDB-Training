@@ -1,0 +1,41 @@
+# one to many relation
+
+cardData> use support
+switched to db support
+support> db.questionThread.insertOne({creator: "Max", question:
+"How does that all work?", answer: ["q1a1","q1a2"]})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c98921f8561e22e3c4e4a3')
+}
+support> db.questionThread.findOne()
+{
+  _id: ObjectId('67c98921f8561e22e3c4e4a3'),
+  creator: 'Max',
+  question: 'How does that all work?',
+  answer: [ 'q1a1', 'q1a2' ]
+}
+support> db.answers.insertMany([{_id: "q1a1", text: "It works li
+ke that."}, {_id: "q1a2", text: "Thanks!"}])
+{ acknowledged: true, insertedIds: { '0': 'q1a1', '1': 'q1a2' } }
+support> db.answers.find()
+[
+  { _id: 'q1a1', text: 'It works like that.' },
+  { _id: 'q1a2', text: 'Thanks!' }
+]
+support> db.questionThread.deleteMany({})
+{ acknowledged: true, deletedCount: 1 }
+support> db.questionThread.insertOne({creator: "Max", question: "How does that all work?", answer: [{text: "Like that."}, {text: "Thanks!"}]})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c98b41f8561e22e3c4e4a4')
+}
+support> db.questionThreads.findOne()
+null
+support> db.questionThread.findOne()
+{
+  _id: ObjectId('67c98b41f8561e22e3c4e4a4'),
+  creator: 'Max',
+  question: 'How does that all work?',
+  answer: [ { text: 'Like that.' }, { text: 'Thanks!' } ]
+}

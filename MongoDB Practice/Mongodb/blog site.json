@@ -1,0 +1,72 @@
+# Blog site
+
+bookRegistry> use blog
+switched to db blog
+blog> db.users.insertMany([{name: "Krishna Vamsi, age: 29, email: "krishna@test.com"}, {name: "Sai Sreekar", age: 30, email: "sreekar@test.com"}])
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:61)
+
+> 1 | db.users.insertMany([{name: "Krishna Vamsi, age: 29, email: "krishna@test.com"}, {name: "Sai Sreekar", age: 30, email: "sreekar@test.com"}])
+    |
+   ^
+  2 |
+
+blog> db.users.insertMany([{name: "Krishna Vamsi", age: 29, email: "krishna@test.com"}, {name: "Sai Sreekar", age: 30, email: "sreekar@test.com"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('67c99c14f8561e22e3c4e4a7'),
+    '1': ObjectId('67c99c14f8561e22e3c4e4a8')
+  }
+}
+blog> db.users.find().pretty()
+[
+  {
+    _id: ObjectId('67c99c14f8561e22e3c4e4a7'),
+    name: 'Krishna Vamsi',
+    age: 29,
+    email: 'krishna@test.com'
+  },
+  {
+    _id: ObjectId('67c99c14f8561e22e3c4e4a8'),
+    name: 'Sai Sreekar',
+    age: 30,
+    email: 'sreekar@test.com'
+  }
+]
+blog> db.posts.insertOne({title: "My first Post", text: "excited", tags: ["new", "tech"], creator: ObjectId('67c99c14f8561e22e3c4e4a8')})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c99ca0f8561e22e3c4e4a9')
+}
+blog> db.posts.updateOne({title: "My first Post", text: "excited", tags: ["new", "tech"], creator: ObjectId('67c99c14f8561e22e3c4e4a8'), comments: [{text: "I like this post", author: ObjectId('67c99c14f8561e22e3c4e4a7')}]})
+MongoInvalidArgumentError: Update document requires atomic operators
+blog> db.posts.update({title: "My first Post", text: "excited", tags: ["new", "tech"], creator: ObjectId('67c99c14f8561e22e3c4e4a8'), comments: [{text: "I like this post", author: ObjectId('67c99c14f8561e22e3c4e4a7')}]})
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+MongoshInvalidInputError: [COMMON-10001] Missing required argument at position 1 (Collection.update)
+blog> db.posts.updateMany({title: "My first Post", text: "excited", tags: ["new", "tech"], creator: ObjectId('67c99c14f8561e22e3c4e4a8'), comments: [{text: "I like this post", author: ObjectId('67c99c14f8561e22e3c4e4a7')}]})
+MongoInvalidArgumentError: Update document requires atomic operators
+blog> db.posts.updateMa({title: "My first Post", text: "excited", tags: ["new", "tech"], creator: ObjectId('67c99c14f8561e22e3c4e4a8'), comments: [{text: "I like this post", author: ObjectId('67c99c14f8561e22e3c4e4a7')}]})
+blog> db.posts.drop()
+true
+blog> db.posts.find()
+
+blog> db.posts.insertOne({title: "My first Post", text: "excited", tags: ["new", "tech"], creator: ObjectId('67c99c14f8561e22e3c4e4a8'), comments: [{text: "I like this post", author: ObjectId('67c99c14f8561e22e3c4e4a7')}]})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c99de6f8561e22e3c4e4aa')
+}
+blog> db.posts.findOne()
+{
+  _id: ObjectId('67c99de6f8561e22e3c4e4aa'),
+  title: 'My first Post',
+  text: 'excited',
+  tags: [ 'new', 'tech' ],
+  creator: ObjectId('67c99c14f8561e22e3c4e4a8'),
+  comments: [
+    {
+      text: 'I like this post',
+      author: ObjectId('67c99c14f8561e22e3c4e4a7')
+    }
+  ]
+}

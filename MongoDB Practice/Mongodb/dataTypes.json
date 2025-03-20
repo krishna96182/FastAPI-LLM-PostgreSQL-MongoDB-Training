@@ -1,0 +1,109 @@
+#DataTypes
+
+flights> use companyData
+switched to db companyData
+Please enter a MongoDB connection string (Default: mongodb://loccompanyData> db.companies.insertOne({name: "Fresh Apples Inc", icompanyData> db.companies.insertOne({name: "Fresh Apples Inc", isStartup: true, employees: 33, funding: 12345678901234567890, details: {ceo: "Mark Super"}, tags: [{title: "super"}, {title: "perfect"}], foundingDate: new Date(), insertedAt: new Timestamp()}
+)
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c977dbf8561e22e3c4e49b')
+}
+companyData> db.companies.findOne()
+{
+  _id: ObjectId('67c977dbf8561e22e3c4e49b'),
+  name: 'Fresh Apples Inc',
+  isStartup: true,
+  employees: 33,
+  funding: 12345678901234567000,
+  details: { ceo: 'Mark Super' },
+  tags: [ { title: 'super' }, { title: 'perfect' } ],
+  foundingDate: ISODate('2025-03-06T10:24:27.395Z'),
+  insertedAt: Timestamp({ t: 1741256667, i: 1 })
+}
+companyData> db.numbers.insertOne({a: 1})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c97888f8561e22e3c4e49c')
+}
+companyData> db.numbers.findOne()
+{ _id: ObjectId('67c97888f8561e22e3c4e49c'), a: 1 }
+companyData> db.stats()
+{
+  db: 'companyData',
+  collections: Long('2'),
+  views: Long('0'),
+  objects: Long('2'),
+  avgObjSize: 130.5,
+  dataSize: 261,
+  storageSize: 40960,
+  indexes: Long('2'),
+  indexSize: 40960,
+  totalSize: 81920,
+  scaleFactor: Long('1'),
+  fsUsedSize: 154693689344,
+  fsTotalSize: 509722226688,
+  ok: 1
+companyData> db.companies.drop()
+true
+companyData> db.stats()
+{
+  db: 'companyData',
+  collections: Long('1'),
+  views: Long('0'),
+  objects: Long('1'),
+  avgObjSize: 29,
+  dataSize: 29,
+  storageSize: 20480,
+  indexes: Long('1'),
+  indexSize: 20480,
+  totalSize: 40960,
+  scaleFactor: Long('1'),
+  fsUsedSize: 154690617344,
+  fsTotalSize: 509722226688,
+  ok: 1
+}
+companyData> db.numbers.deleteMany({})
+{ acknowledged: true, deletedCount: 1 }
+companyData> db.stats()
+{
+  db: 'companyData',
+  collections: Long('1'),
+  views: Long('0'),
+  objects: Long('0'),
+  avgObjSize: 0,
+  dataSize: 0,
+  storageSize: 20480,
+  indexes: Long('1'),
+  indexSize: 20480,
+  totalSize: 40960,
+  scaleFactor: Long('1'),
+  fsUsedSize: 154697031680,
+  fsTotalSize: 509722226688,
+  ok: 1
+}
+companyData> db.numbers.insertOne({a: NumberInt(1)})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c979eff8561e22e3c4e49d')
+}
+companyData> db.stats()
+{
+  db: 'companyData',
+  collections: Long('1'),
+  views: Long('0'),
+  objects: Long('1'),
+  avgObjSize: 29,
+  dataSize: 29,
+  storageSize: 24576,
+  indexes: Long('1'),
+  indexSize: 24576,
+  totalSize: 49152,
+  scaleFactor: Long('1'),
+  fsUsedSize: 154699952128,
+  fsTotalSize: 509722226688,
+  ok: 1
+}
+companyData> typeof db.number.findOne().a
+TypeError: Cannot read properties of null (reading 'a')
+companyData> typeof db.numbers.findOne().a
+number

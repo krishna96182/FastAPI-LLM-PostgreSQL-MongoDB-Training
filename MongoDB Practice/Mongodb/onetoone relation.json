@@ -1,0 +1,88 @@
+#one to one relation
+
+companyData> use hospital
+switched to db hospital
+hospital> db.patients.insertOne({name: "Max", age: 29, diseaseSummary: "summary-max-1"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c9811bf8561e22e3c4e49e')
+}
+hospital> db.patients.findOne()
+{
+  _id: ObjectId('67c9811bf8561e22e3c4e49e'),
+  name: 'Max',
+  age: 29,
+  diseaseSummary: 'summary-max-1'
+}
+hospital> db.diseasesSummaries.insertOne({_id: "summary-max-1, d
+iseases: ["cold", "broken leg"]})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:65)
+
+> 1 | db.diseasesSummaries.insertOne({_id: "summary-max-1, diseases: ["cold", "broken leg"]})
+    |
+       ^
+  2 |
+
+hospital> db.diseasesSummaries.insertOne({_id: "summary-max-1", diseases: ["cold", "broken leg"]})
+{ acknowledged: true, insertedId: 'summary-max-1' }
+hospital> db.diseasesSummaries.findOne()
+{ _id: 'summary-max-1', diseases: [ 'cold', 'broken leg' ] }
+hospital> db.patients.findOne()
+{
+  _id: ObjectId('67c9811bf8561e22e3c4e49e'),
+  name: 'Max',
+  age: 29,
+  diseaseSummary: 'summary-max-1'
+}
+hospital> db.patients.findOne().diseaseSummary
+summary-max-1
+hospital> var dsid = db.patients.findOne().diseaseSummary
+
+hospital> dsid
+summary-max-1
+hospital> db.diseaseSummaries.findOne({_id: dsid})
+null
+hospital> db.diseasesSummaries.findOne({_id: dsid})
+{ _id: 'summary-max-1', diseases: [ 'cold', 'broken leg' ] }
+hospital> db.patients.deleteMany({})
+{ acknowledged: true, deletedCount: 1 }
+hospital> db.patients.insertOne({name: "Max", age: 29, diseaseSummary: {diseases: ["cold", "broken leg"]}})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c9849ff8561e22e3c4e49f')
+}
+hospital> db.patients.findOne()
+{
+  _id: ObjectId('67c9849ff8561e22e3c4e49f'),
+  name: 'Max',
+  age: 29,
+  diseaseSummary: { diseases: [ 'cold', 'broken leg' ] }
+}
+hospital> use cardData
+switched to db cardData
+cardData> db.person.insertOne({name: "Max", car: {model: "BMW",
+price: 40000}})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c9866ef8561e22e3c4e4a0')
+}
+cardData> db.person.findOne()
+{
+  _id: ObjectId('67c9866ef8561e22e3c4e4a0'),
+  name: 'Max',
+  car: { model: 'BMW', price: 40000 }
+}
+cardData> db.person.deleteMany({})
+{ acknowledged: true, deletedCount: 1 }
+cardData> db.person.insertOne({name: "Max", age: 29, salary: 3000})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c98725f8561e22e3c4e4a1')
+}
+cardData> db.cars.insertOne({model: "BMW", price: 40000, owner:
+ObjectId('67c98725f8561e22e3c4e4a1')})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c9876ff8561e22e3c4e4a2')
+}

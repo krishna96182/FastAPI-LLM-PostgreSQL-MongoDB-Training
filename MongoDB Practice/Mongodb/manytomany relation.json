@@ -1,0 +1,35 @@
+# many to many relation
+
+support> use bookRegistry
+switched to db bookRegistry
+bookRegistry> db.books.insertOne({name: "My favorite Book", authors: [{name: "Max Schwarz", age: 29}, {name: "Manuel Lor", age:
+30}]})
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c991aff8561e22e3c4e4a5')
+}
+bookRegistry> db.books.find().pretty()
+[
+  {
+    _id: ObjectId('67c991aff8561e22e3c4e4a5'),
+    name: 'My favorite Book',
+    authors: [
+      { name: 'Max Schwarz', age: 29 },
+      { name: 'Manuel Lor', age: 30 }
+    ]
+  }
+]
+bookRegistry> db.authors.insertOne([{name: "Max Schwar", age:bookRegistry> db.authors.insertOne([{name: "Max Schwar", age:29,address: {street: "Main"}}, {name: "Manuel Lor", age: 30,
+address: {stree: "Tree"}}])
+{
+  acknowledged: true,
+  insertedId: ObjectId('67c9925ff8561e22e3c4e4a6')
+}
+bookRegistry> db.authors.find().pretty()
+[
+  {
+    '0': { name: 'Max Schwar', age: 29, address: { street: 'Main' } },
+    '1': { name: 'Manuel Lor', age: 30, address: { stree: 'Tree' } },
+    _id: ObjectId('67c9925ff8561e22e3c4e4a6')
+  }
+Please enter a MongoDB connection string (Default: mongodb://locbookRegistry>
